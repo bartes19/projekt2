@@ -8,10 +8,8 @@ package my.presentation;
 import boundary.PersonFacade;
 import entities.Person;
 import java.io.Serializable;
-import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.view.ViewScoped;
+import javax.enterprise.context.SessionScoped;
 //import javax.faces.bean.ViewScoped;
 import javax.inject.Named;
 
@@ -20,15 +18,23 @@ import javax.inject.Named;
  * @author bszydzik
  */
 @Named("personView")
-@ViewScoped
-public class PersonView implements Serializable{
+@SessionScoped
+public class PersonView implements Serializable {
 
     @EJB
     private PersonFacade personFacade;
 
     private Person person;
-    
+
     public PersonView() {
+        this.person = new Person();
+    }
+
+    public void init(Person p) {
+        this.person = p;
+    }
+
+    public void init() {
         this.person = new Person();
     }
 
@@ -41,8 +47,25 @@ public class PersonView implements Serializable{
     }
 
     public void save() {
-        System.out.println("Dodawanie: "+person);
-        personFacade.addPerson(person);
-    }   
+
+        System.out.println("Dodawanie: " + person);
+        if (person.getId() == null) {
+            personFacade.addPerson(person);
+        } else {
+            personFacade.updatePerson(person);
+        }
+        count();
+    }
+
+    public void count() {
+        personFacade.countPersons();
+        System.out.println(personFacade.countPersons());
+
+    }
+
+    public void update() {
+        System.out.println("Dodawanie: " + person);
+        personFacade.updatePerson(person);
+    }
 
 }

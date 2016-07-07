@@ -10,7 +10,7 @@
     <display-name>JavaServerFaces</display-name>
 
 
-<!--    <resource-ref>
+    <!--    <resource-ref>
         <res-ref-name>java:/Proj3</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
@@ -20,6 +20,11 @@
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>south-street</param-value>
     </context-param>
 
     <!-- Welcome page -->

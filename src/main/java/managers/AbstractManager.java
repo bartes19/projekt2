@@ -27,10 +27,13 @@ public abstract class AbstractManager<T> {
 
     public void create(T entity) {
         entityManager.persist(entity);
+        
     }
 
     public void edit(T entity) {
+        
         entityManager.merge(entity);
+        entityManager.flush();
     }
 
     public void remove(T entity) {

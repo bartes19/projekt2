@@ -14,22 +14,25 @@
             <h2>JSF Table - table.xhtml</h2>
 
 
-            <p:panel id="panel2" header="Tabela" style="margin:10pt; margin-top: 10pt" toggleable="false">
-                <p:dataTable id="lazyDataTable" var="p" paginator="true" rows="10" value="#{tableView.persons}"
-
+            <p:panel id="panel2" header="Tabela" style="margin:10pt; margin-top: 10pt" >
+                <p:dataTable id="lazyDataTable" var="p" paginator="true" rows="10"
+                             selectionMode="single" 
+                             rowKey="#{p.id}" 
+                             value="#{tableView.persons}"
                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                              rowsPerPageTemplate="5,10,15" style="width: 80%;margin-left: 10%;margin-right: 10%;">
 
+                    <p:ajax event="rowSelect" listener="#{tableView.onRowSelect}" />
 
-                    <p:column style="width:10%" sortBy="#{p.id}" filterBy="#{p.id}">
+                    <p:column style="width:20%" sortBy="#{p.id}" filterBy="#{p.id}">
                         <f:facet name="header" >Id</f:facet>
                         <h:outputText value="#{p.id}" />
                     </p:column>
-                    <p:column style="width:35%" sortBy="#{p.name}" filterBy="#{p.name}">
+                    <p:column style="width:30%" sortBy="#{person.name}" filterBy="#{p.name}">
                         <f:facet name="header">Name</f:facet>
                         <h:outputText value="#{p.name}" />
                     </p:column>
-                    <p:column style="width:35%" sortBy="#{p.surname}" filterBy="#{p.surname}">
+                    <p:column style="width:30%" sortBy="#{p.surname}" filterBy="#{p.surname}">
                         <f:facet name="header">Surname</f:facet>
                         <h:outputText value="#{p.surname}" />
                     </p:column>
@@ -37,44 +40,23 @@
                         <f:facet name="header">Age</f:facet>
                         <h:outputText value="#{p.age}" />
                     </p:column>
+
                     <f:facet name="footer">
-                        <p:commandButton id="createButton" icon="ui-icon-plus"/>
+                        <p:commandButton id="addButton" icon="ui-icon-plus" value="Add" action="details"  actionListener="#{personView.init()}"/>
 
-<!--                                         value="#{bundle.Create}"-->
+                        <p:commandButton id="editButton"   icon="ui-icon-pencil" value="Edit" action="edit" actionListener="#{personView.init(tableView.selectedPerson)}"></p:commandButton>
 
-<!--                                         actionListener="#{poolController.prepareCreate}"
+                        <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="Delete"
 
-                                         update=":PoolCreateForm"
+                                         actionListener="#{tableView.remove}"
+                                         ajax="false" 
+                                         action="table"/>
 
-                                         oncomplete="PF('PoolCreateDialog').show()"/>-->
-                        <p:commandButton id="viewButton"   icon="ui-icon-search"/>
-
-<!--                                         value="#{bundle.View}" update=":PoolViewForm"
-
-                                         oncomplete="PF('PoolViewDialog').show()"
-
-                                         disabled="#{empty poolController.selected}"/>-->
-                        <p:commandButton id="editButton"   icon="ui-icon-pencil" />
-
-<!--                                         value="#{bundle.Edit}" update=":PoolEditForm"
-
-                                         oncomplete="PF('PoolEditDialog').show()"
-
-                                         disabled="#{empty poolController.selected}"/>-->
-                        <p:commandButton id="deleteButton" icon="ui-icon-trash" />
-
-<!--                                         value="#{bundle.Delete}"
-
-                                         actionListener="#{poolController.destroy}"
-
-                                         update=":growl,datalist"
-
-                                         disabled="#{empty poolController.selected}"/>-->
                     </f:facet>
                 </p:dataTable>
 
 
-                <p:commandButton id="detailsButton" title="detailsButton" value="detailsButton" action="details" ajax="false"></p:commandButton>
+<!--                <p:commandButton id="detailsButton" title="detailsButton" value="detailsButton" action="details" ajax="false"></p:commandButton>-->
 
             </p:panel>
 
